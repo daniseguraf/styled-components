@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const Input = styled.input`
@@ -13,4 +12,4 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
-export default Input;
+export { Input };

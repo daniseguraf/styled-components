@@ -8,18 +8,18 @@ const Button = styled.button`
   width: 100%;
   display: block;
   white-space: none;
-  background: #f8049c;
+  background: ${({ theme }) => theme.primaryColor};
 
   ${({ variant }) =>
     variant === 'primary' &&
     css`
-      background: #f8049c;
+      background: ${({ theme }) => theme.primaryColor};
     `}
 
   ${({ variant }) =>
     variant === 'secondary' &&
     css`
-      background: black;
+      background: ${({ theme }) => theme.secondaryColor};
     `}
 
   ${({ size }) =>

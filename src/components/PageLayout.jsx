@@ -29,4 +29,4 @@ const PageLayout = ({ children }) => {
   );
 };
 
-export default PageLayout;
+export { PageLayout };

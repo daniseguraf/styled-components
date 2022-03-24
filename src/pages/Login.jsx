@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import PageLayout from '../components/PageLayout';
-import Input from '../components/Input';
+import {
+  PageLayout,
+  Input,
+  PasswordInput,
+  Button,
+  Spinner,
+} from '../components';
 
 const Form = styled.form`
   width: 100%;
@@ -12,11 +17,19 @@ const Form = styled.form`
   box-sizing: border-box;
   color: black;
   border-radius: 4px;
+
+  .alt-text {
+    padding: 10px 0;
+    text-align: center;
+  }
 `;
+
+let timeout;
 
 const Login = () => {
   const [formFields, setFormFields] = useState({ username: '', password: '' });
-  console.log(formFields);
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     e.persist();
     setFormFields((currentValue) => ({
@@ -25,24 +38,56 @@ const Login = () => {
     }));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    timeout = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+    };
+  }, []);
+
   return (
     <PageLayout>
       <h1>Login</h1>
-      <Form>
-        <Input
-          type="text"
-          value={formFields.username}
-          name="username"
-          placeholder="Username"
-          onChange={handleChange}
-        />
-        <Input
-          type="password"
-          value={formFields.password}
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-        />
+      <Form onSubmit={handleSubmit}>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <>
+            <Input
+              type="text"
+              value={formFields.username}
+              name="username"
+              placeholder="Username"
+              onChange={handleChange}
+            />
+            <PasswordInput
+              value={formFields.password}
+              onChange={handleChange}
+            />
+          </>
+        )}
+
+        <Button size="large" type="submit" disabled={loading}>
+          {loading ? 'Loading...' : 'Login'}
+        </Button>
+
+        {!loading && (
+          <>
+            <div className="alt-text">or</div>
+            <Button variant="secondary" size="large" type="button">
+              Register
+            </Button>
+          </>
+        )}
       </Form>
     </PageLayout>
   );

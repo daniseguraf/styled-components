@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState, useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 import { Link as ReactRouterDomLink, useLocation } from 'react-router-dom';
+import { Toggle } from './Toggle';
 
 const Content = styled.header`
   height: 60px;
@@ -10,8 +11,12 @@ const Content = styled.header`
   padding: 0 16px;
   position: fixed;
   top: 0;
-  background-image: linear-gradient(to right, #f8049c, #fdd54f);
-  border-bottom: 3px solid #fdd54f;
+  background-image: linear-gradient(
+    to right,
+    ${({ theme }) => theme.primaryColor},
+    ${({ theme }) => theme.secondaryColor}
+  );
+  border-bottom: 3px solid ${({ theme }) => theme.secondaryColor};
 `;
 
 const Menu = styled.nav`
@@ -23,7 +28,7 @@ const Menu = styled.nav`
   left: 0;
   padding: 8px;
   box-sizing: border-box;
-  border-bottom: 3px solid #fdd54f;
+  border-bottom: 3px solid ${({ theme }) => theme.secondaryColor};
   background: white;
 
   @media (min-width: 768px) {
@@ -75,6 +80,8 @@ const Hamburger = styled.div`
 const Header = () => {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
+  const { theme, setTheme } = useContext(ThemeContext);
+  console.log(theme, setTheme);
 
   return (
     <Content>
@@ -91,6 +98,7 @@ const Header = () => {
           Login
         </StyledLink>
       </Menu>
+      <Toggle />
     </Content>
   );
 };
