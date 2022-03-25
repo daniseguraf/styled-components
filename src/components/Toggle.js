@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Content = styled.div`
+const ToggleContainer = styled.div`
   width: 50px;
   min-width: 50px;
   height: 25px;
@@ -27,11 +27,11 @@ const Notch = styled.div`
   transform: translate(${({ isActive }) => (isActive ? '26px' : '1px')});
 `;
 
-const Toggle = ({ isActive, onToggle }) => {
+const Toggle = ({ isActive, onClick }) => {
   return (
-    <Content onClick={onToggle}>
+    <ToggleContainer onClick={onClick}>
       <Notch isActive={isActive}></Notch>
-    </Content>
+    </ToggleContainer>
   );
 };
 

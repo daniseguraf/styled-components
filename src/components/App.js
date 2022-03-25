@@ -4,28 +4,30 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Home from './../pages/Home';
 import Login from './../pages/Login';
-import LightTheme from './../themes/light';
-import DarkTheme from './../themes/dark';
+import lightTheme from './../themes/light';
+import darkTheme from './../themes/dark';
 
 const GlobalStyle = createGlobalStyle`
 body {
-background: white;
-min-height: 100vh;
-margin: 0;
-color: black;
-font-family: 'Kaushan Script';
+  background: ${({ theme }) => theme.bodyBackgroundColor};
+  min-height: 100vh;
+  margin: 0;
+  color: ${({ theme }) => theme.bodyFontColor};
+  font-family: 'Kaushan Script';
 }
 `;
 
 function App() {
-  const [theme, setTheme] = useState(LightTheme);
+  const [theme, setTheme] = useState(lightTheme);
 
   return (
     <ThemeProvider
       theme={{
         ...theme,
         setTheme: () => {
-          setTheme(({ id }) => (id === 'light' ? LightTheme : DarkTheme));
+          setTheme((currentValue) =>
+            currentValue.id === 'light' ? darkTheme : lightTheme
+          );
         },
       }}
     >

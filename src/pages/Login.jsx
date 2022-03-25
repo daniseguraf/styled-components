@@ -22,6 +22,10 @@ const Form = styled.form`
     padding: 10px 0;
     text-align: center;
   }
+
+  > ${Button}:first-of-type {
+    margin-top: 40px;
+  }
 `;
 
 let timeout;

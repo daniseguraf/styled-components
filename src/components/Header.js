@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { ThemeContext, useTheme } from 'styled-components';
 import { Link as ReactRouterDomLink, useLocation } from 'react-router-dom';
 import { Toggle } from './Toggle';
 
@@ -29,7 +29,7 @@ const Menu = styled.nav`
   padding: 8px;
   box-sizing: border-box;
   border-bottom: 3px solid ${({ theme }) => theme.secondaryColor};
-  background: white;
+  background: ${({ theme }) => theme.bodyBackgroundColor};
 
   @media (min-width: 768px) {
     display: flex;
@@ -55,7 +55,7 @@ const StyledLink = styled(Link)`
   box-sizing: border-box;
   margin: auto 0;
   font-weight: ${(isActive) => (isActive ? 'bold' : 'inherit')};
-  color: black;
+  color: ${({ theme }) => theme.bodyFontColor};
 `;
 
 const Hamburger = styled.div`
@@ -70,7 +70,7 @@ const Hamburger = styled.div`
   }
 
   & > div {
-    background: black;
+    background: ${({ theme }) => theme.bodyFontColor};
     height: 3px;
     width: 100%;
     margin: 5px 0;
@@ -80,8 +80,7 @@ const Hamburger = styled.div`
 const Header = () => {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
-  const { theme, setTheme } = useContext(ThemeContext);
-  console.log(theme, setTheme);
+  const { id, setTheme } = useTheme();
 
   return (
     <Content>
@@ -98,7 +97,7 @@ const Header = () => {
           Login
         </StyledLink>
       </Menu>
-      <Toggle />
+      <Toggle isActive={id === 'dark'} onClick={setTheme} />
     </Content>
   );
 };
